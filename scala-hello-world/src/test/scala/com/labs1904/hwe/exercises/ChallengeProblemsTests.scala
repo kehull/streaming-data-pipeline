@@ -86,23 +86,23 @@ describe("Challenge One") {
       assert(expected === actual)
     }
   }
-//  describe("Challenge 10") {
-//    it("Returns the cat age from a human age when passed a Some") {
-//      val input: Option[Int] = Some(4)
-//      val expected: Option[Int] = Some(16)
+  describe("Challenge 10") {
+    it("Returns the cat age from a human age when passed a Some") {
+      val input: Option[Int] = Some(4)
+      val expected: Option[Int] = Some(16)
+
+      val actual = ChallengeProblems.catsAgeOption(input)
+      assert(expected === actual)
+    }
 //
-//      val actual = ChallengeProblems.catsAgeOption(input)
-//      assert(expected === actual)
-//    }
-////
-//    it("Returns a None when passed a None") {
-//      val input: Option[Int] = None
-//      val expected: Option[Int] = None
-//
-//      val actual = ChallengeProblems.catsAgeOption(input)
-//      assert(expected === actual)
-//    }
-//  }
+    it("Returns a None when passed a None") {
+      val input: Option[Int] = None
+      val expected: Option[Int] = None
+
+      val actual = ChallengeProblems.catsAgeOption(input)
+      assert(expected === actual)
+    }
+  }
 //
   describe("Challenge Eleven") {
     it("Checks if minimum value in list is returned") {
@@ -113,20 +113,20 @@ describe("Challenge One") {
     }
   }
 //
-//  describe("Challenge Twelve") {
-//    it("Checks if minimum is returned") {
-//      val input:List[Option[Int]] = List(Some(1),Some(-4),Some(19),Some(10),Some(-3))
-//      val expected = Some(-4)
-//      val actual = ChallengeProblems.minimumOption(input)
-//      assert(expected === actual)
-//    }
-//    it("Returns a None when passed a None") {
-//      val input:List[Option[Int]] = List(None, None)
-//      val expected = None
-//      val actual = ChallengeProblems.minimumOption(input)
-//      assert(expected === actual)
-//    }
-//  }
+  describe("Challenge Twelve") {
+    it("Checks if minimum is returned") {
+      val input:List[Option[Int]] = List(Some(1),Some(-4),Some(19),Some(10),Some(-3))
+      val expected = Some(-4)
+      val actual = ChallengeProblems.minimumOption(input)
+      assert(expected === actual)
+    }
+    it("Returns a None when passed a None") {
+      val input:List[Option[Int]] = List(None, None)
+      val expected = None
+      val actual = ChallengeProblems.minimumOption(input)
+      assert(expected === actual)
+    }
+  }
 
 
 

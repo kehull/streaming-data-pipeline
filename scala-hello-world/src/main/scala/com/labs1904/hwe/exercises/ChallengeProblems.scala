@@ -98,12 +98,12 @@ def catsAge(input:Int): Int = {
     -Params - Option[Int]
     -Returns - Option[Int]
  */
-//  def catsAgeOption(input:Option[Int]): Option[Int]= {
-//    case Some(x) => x/4
-//    case None => None
-//  }
-
-  //COME BACK TO THIS
+  def catsAgeOption(input:Option[Int]): Option[Int]= {
+        input match {
+          case Some(x) => Some(x*4)
+          case None => None
+        }
+  }
 
   /*
   11. Write a function that takes in a list of ints, and return the minimum of the ints provided
@@ -119,8 +119,10 @@ def catsAge(input:Int): Int = {
   If no ints are provided, return None.
  */
 
-// COME BACK TO THIS
+  def minimumOption(input:List[Option[Int]]): Option[Int] = {
+    input.min
   }
+//  }
 
 
 
