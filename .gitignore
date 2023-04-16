@@ -121,3 +121,4 @@ Temporary Items
 .apdisk
 
 # End of https://www.toptal.com/developers/gitignore/api/macos
+kafka-hello-world/src/main/scala/com/labs1904/hwe/util/Constants.scala
