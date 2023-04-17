@@ -23,23 +23,27 @@ object KafkaHomework {
 
     // Create the KafkaConsumer
     //TODO: Write in a comment what these lines are doing. What are the properties necessary to instantiate a consumer?
+    //This section of code is connecting to the Kafka cluster. To instantiate a consumer, the necessary properties are a key/value pair, partition, and off-set.
     val properties = getProperties(BootstrapServer)
     val consumer: KafkaConsumer[String, String] = new KafkaConsumer[String, String](properties)
 
 
     //TODO: What does this line mean? Write your answer in a comment below
+    //This line tells the program which topics it's meant to subscribe to.
     consumer.subscribe(Arrays.asList(Topic))
 
     while (true) {
       // TODO: Change this to be every 5 seconds
-      val duration: Duration = Duration.ofMillis(100)
+      val duration: Duration = Duration.ofMillis(5000)
 
       //TODO: Look up the ConsumerRecords class below, in your own words what is the class designed to do?
+      //ConsumerRecords is the container for a list called ConsumerRecord, which is the key-value pair of a the offset for a single record along with the topic name, partition number, and timestamp for when the record was produced.
       val records: ConsumerRecords[String, String] = consumer.poll(duration)
 
       records.forEach((record: ConsumerRecord[String, String]) => {
         // Retrieve the message from each record
         //TODO: Describe why we need the .value() at the end of record
+        //.value() retrieves the contents of the record. Other methods such as .key(), .topic(), .partition(), etc. could be used to retrieve other data from the record, but .value() retrieves the part of the record that the end user would consider to be the contents of that record.
         val message = record.value()
 
         //TODO: If you were given the values for the bootstrap servers in class, run the app with the green play button and make sure it runs successfully. You should see message(s) printing out to the screen
