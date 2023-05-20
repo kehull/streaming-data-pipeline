@@ -34,7 +34,7 @@ object StreamingPipeline {
   lazy val logger: Logger = Logger.getLogger(this.getClass)
   val jobName = "StreamingPipeline"
 
-  val hdfsUrl = "CHANGEME"
+  val hdfsUrl = "hdfs://hbase01.hourswith.expert:8020/"
   val bootstrapServers = "b-3-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196,b-2-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196,b-1-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196"
   val username = "1904labs"
   val password = "1904labs"
