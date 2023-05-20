@@ -83,7 +83,7 @@ object StreamingPipeline {
       val ids = reviewRow.select("customer_id").collect.map(_.getString(0)).toList.toDS //collects reviewRow dataframe as an array of rows, applies "map" to extract the string value of the first column of each row, converts the array to a list and then a dataset named "ids"
       val customers = ids.mapPartitions(partition => { //applies mapPartitions transformation to the 'ids' Dataset; maps each partition of the Dataset to a new collection of values by applying a function to each partition
         val conf = HBaseConfiguration.create() // create HBase configuration
-        conf.set("hbase.zookeeper.quorum", "cdh01.hourswith.expert:2181,cdh02.hourswith.expert:2181,cdh03.hourswith.expert:2181") //set ZooKeeper
+        conf.set("hbase.zookeeper.quorum", "hbase01.labs1904.com:2181") //set ZooKeeper
         val connection = ConnectionFactory.createConnection(conf) // establish HBase connection
         val table = connection.getTable(TableName.valueOf("khull:users")) // get my table
 
