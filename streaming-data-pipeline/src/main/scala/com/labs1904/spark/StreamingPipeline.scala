@@ -4,8 +4,8 @@ import org.apache.hadoop.hbase.HBaseConfiguration
 import org.apache.log4j.Logger
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.streaming.{OutputMode, Trigger}
-import org.apache.hadoop.hbase.client.{Connection, ConnectionFactory, Delete, Get, Put, Scan}
-import org.apache.hadoop.hbase.{HBaseConfiguration, TableName}
+import org.apache.hadoop.hbase.client.{ConnectionFactory, Get}
+import org.apache.hadoop.hbase.{TableName}
 import org.apache.hadoop.hbase.util.Bytes
 
 /**
