@@ -1,13 +1,15 @@
 package com.labs1904.hwe
 
+import com.labs1904.hwe.WordCountBatchApp.splitSentenceIntoWords
+import org.apache.kafka.clients.consumer.{ConsumerConfig, KafkaConsumer}
 import org.apache.kafka.clients.producer.ProducerConfig
-import org.apache.kafka.common.serialization.StringSerializer
+import org.apache.kafka.common.serialization.{StringDeserializer, StringSerializer}
 import org.apache.log4j.Logger
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming.{OutputMode, Trigger}
 import org.apache.spark.sql.SparkSession
 
-import java.util.Properties
+import java.util.{Arrays, Properties, UUID}
 
 /**
  * Spark Structured Streaming app
@@ -17,15 +19,15 @@ object WordCountStreamingApp {
   val jobName = "WordCountStreamingApp"
   // TODO: define the schema for parsing data from Kafka
 
-  val bootstrapServer : String = "CHANGEME"
-  val username: String = "CHANGEME"
-  val password: String = "CHANGEME"
+  val bootstrapServer : String = "b-3-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196,b-2-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196,b-1-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196"
+  val username: String = "1904labs"
+  val password: String = "1904labs"
   val Topic: String = "word-count"
 
   //Use this for Windows
-  //val trustStore: String = "src\\main\\resources\\kafka.client.truststore.jks"
+  val trustStore: String = "src\\main\\resources\\kafka.client.truststore.jks"
   //Use this for Mac
-  val trustStore: String = "src/main/resources/kafka.client.truststore.jks"
+//  val trustStore: String = "src/main/resources/kafka.client.truststore.jks"
 
   def main(args: Array[String]): Unit = {
     logger.info(s"$jobName starting...")
@@ -40,6 +42,7 @@ object WordCountStreamingApp {
       import spark.implicits._
 
       val sentences = spark
+
         .readStream
         .format("kafka")
         .option("maxOffsetsPerTrigger", 10)
@@ -56,17 +59,23 @@ object WordCountStreamingApp {
         .load()
         .selectExpr("CAST(value AS STRING)").as[String]
 
-      sentences.printSchema
+//      sentences.show()
 
       // TODO: implement me
-      //val counts = ???
+      val counts = sentences
+        // make all words lowercase, remove extra punctuation, and split the string into a dataset of strings
+        .flatMap(sentence => splitSentenceIntoWords(sentence))
+        // group columns by word and add an aggregate column counting each word
+        .groupBy(col("value")).count()
+        // sort by the column "count" in desc order
+        .sort(col("count").desc)
 
-      val query = sentences.writeStream
-        .outputMode(OutputMode.Append())
+      val query = counts.writeStream
+        .outputMode(OutputMode.Complete())
         .format("console")
         .trigger(Trigger.ProcessingTime("5 seconds"))
         .start()
-
+//
       query.awaitTermination()
     } catch {
       case e: Exception => logger.error(s"$jobName error in main", e)
@@ -78,5 +87,4 @@ object WordCountStreamingApp {
    username=\"$username\"
    password=\"$password\";"""
   }
-
 }

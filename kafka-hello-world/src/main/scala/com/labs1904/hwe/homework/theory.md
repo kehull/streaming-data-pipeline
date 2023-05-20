@@ -86,3 +86,6 @@ Replication is handled using a topic replication factor- for example, a topic re
 
 #### What was the most fascinating aspect of Kafka to you while learning? 
 I was initially very intimidated by Kafka, so I was glad to find that once it was broken down and all the terms defined that I could easily understand the way that it works. I found replication very interesting, since it was the part that was least intuitive to me.
+
+
+

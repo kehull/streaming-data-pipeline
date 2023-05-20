@@ -18,14 +18,18 @@ object WordCountBatchApp {
         .getOrCreate()
       import spark.implicits._
 
-      val sentences = spark.read.csv("src/main/resources/sentences.txt").as[String]
-      sentences.printSchema
+      val sentences = spark.read.csv("C:\\Users\\kelly\\OneDrive\\Documents\\HoursWithExperts\\streaming-data-pipeline\\spark-hello-world\\src\\main\\resources\\sentences.txt").as[String]
 
-      // TODO: implement me
+      // get the string of sentences parsed from the csv
+      val counts = sentences
+        // make all words lowercase, remove extra punctuation, and split the string into a dataset of strings
+        .flatMap(sentence => splitSentenceIntoWords(sentence))
+        // group columns by word and add an aggregate column counting each word
+        .groupBy(col("value")).count()
+        // sort by the column "count" in desc order
+        .sort(col("count").desc)
+      counts.show()
 
-      //val counts = ???
-
-      //counts.foreach(wordCount=>println(wordCount))
     } catch {
       case e: Exception => logger.error(s"$jobName error in main", e)
     }
@@ -33,6 +37,15 @@ object WordCountBatchApp {
 
   // TODO: implement this function
   // HINT: you may have done this before in Scala practice...
-  def splitSentenceIntoWords(sentence: String): Array[String] = ???
-
+  def splitSentenceIntoWords(sentence: String): Array[String] = {
+    sentence
+      // convert all text to lowercase, otherwise "the" and "The" will be two separate values
+      .toLowerCase()
+      // replace all exteraneous punctuation with nothing, otherwise "are" and "are." will be two separate values. Keep apostrophes and hyphens.
+      .replaceAll("""[\p{Punct}&&[^"'"-]]""", "")
+      // split the string on every space into an array
+      .split(" ")
+      // drop all empty values from the array
+      .filter(_.nonEmpty)
+  }
 }

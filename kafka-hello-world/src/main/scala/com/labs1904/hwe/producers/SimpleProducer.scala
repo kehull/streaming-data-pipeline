@@ -8,10 +8,11 @@ import java.util.Properties
 
 object SimpleProducer {
   // Set constants
-  val BootstrapServer : String = "CHANGEME"
-  val Topic: String = "question-1-output"
-  val username: String = "CHANGEME"
-  val password: String = "CHANGEME"
+  val BootstrapServer: String = "b-3-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196,b-2-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196,b-1-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196"
+  val consumerTopic: String = "question-1"
+  val producerTopic: String = "question-1-output"
+  val username: String = "1904labs"
+  val password: String = "1904labs"
   //Use this for Windows
   val trustStore: String = "src\\main\\resources\\kafka.client.truststore.jks"
   //Use this for Mac
@@ -23,7 +24,7 @@ object SimpleProducer {
     val producer = new KafkaProducer[String, String](properties)
     val messageToSend = "Change Me"
 
-    val record = new ProducerRecord[String, String](Topic, messageToSend)
+    val record = new ProducerRecord[String, String]("question-1-output", messageToSend)
 
     producer.send(record)
 
